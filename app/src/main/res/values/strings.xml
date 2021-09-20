@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">AppDictionary</string>
+    <string name="word_tools_text">hello</string>
+    <string name="button_translate_text">translate</string>
+    <string name="meanings_tools_text">meanings</string>
+    <string name="button_get_text">Get</string>
 </resources>
