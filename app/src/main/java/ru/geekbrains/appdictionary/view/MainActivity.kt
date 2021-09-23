@@ -2,43 +2,47 @@ package ru.geekbrains.appdictionary.view
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import dagger.android.AndroidInjection
 import ru.geekbrains.appdictionary.databinding.ActivityMainBinding
 import ru.geekbrains.appdictionary.model.AppState
-import ru.geekbrains.appdictionary.presenter.IPresenter
-import ru.geekbrains.appdictionary.presenter.MainPresenterImpl
+import ru.geekbrains.appdictionary.viewmodel.MainInteractor
+import ru.geekbrains.appdictionary.viewmodel.MainViewModel
+import javax.inject.Inject
 
-class MainActivity : BaseActivity<AppState>() {
+class MainActivity : BaseActivity<AppState, MainInteractor>() {
 
-    private var vb: ActivityMainBinding? = null
+    @Inject
+    internal lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private lateinit var binding: ActivityMainBinding
+    override lateinit var model: MainViewModel
+    private val observer = Observer<AppState> { renderData(it) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        vb = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(vb?.root)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        vb?.buttonGet?.setOnClickListener {
-            val txt = vb?.word?.text.toString()
-            Toast.makeText(this, txt, Toast.LENGTH_SHORT).show()
-            presenter.getData(vb?.word?.text.toString())
+        model = viewModelFactory.create(MainViewModel::class.java)
+        model.subscribe().observe(this@MainActivity, Observer<AppState> { renderData(it) })
+
+        binding.buttonGet.setOnClickListener {
+            val searchWord = binding.word.text.toString()
+            Toast.makeText(this, searchWord, Toast.LENGTH_SHORT).show()
+            model.getData(searchWord)
         }
 
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        vb = null
-    }
-
-    override fun createPresenter(): IPresenter<AppState, IView> {
-        return MainPresenterImpl()
     }
 
     override fun renderData(appState: AppState) {
         when (appState) {
             is AppState.Success -> {
                 val description = appState.data
-                if (description != null && !description.isEmpty()) {
-                    vb?.meanings?.text = description.first().meanings?.first()?.definitions?.first()?.definition
+                if (description != null && description.isNotEmpty()) {
+                    binding.meanings.text = description.first().meanings?.first()?.definitions?.first()?.definition
                 }
             }
             is AppState.Error -> {

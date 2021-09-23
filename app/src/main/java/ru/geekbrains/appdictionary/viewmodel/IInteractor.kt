@@ -1,4 +1,4 @@
-package ru.geekbrains.appdictionary.presenter
+package ru.geekbrains.appdictionary.viewmodel
 
 import io.reactivex.Observable
 
