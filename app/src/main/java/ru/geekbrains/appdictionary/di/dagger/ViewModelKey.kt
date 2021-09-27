@@ -1,4 +1,4 @@
-package ru.geekbrains.appdictionary.di
+package ru.geekbrains.appdictionary.di.dagger
 
 import androidx.lifecycle.ViewModel
 import dagger.MapKey

@@ -1,7 +1,8 @@
-package ru.geekbrains.appdictionary.di
+package ru.geekbrains.appdictionary.di.dagger
 
 import dagger.Module
 import dagger.Provides
+import ru.geekbrains.appdictionary.di.NAME_REMOTE
 import ru.geekbrains.appdictionary.model.IRepository
 import ru.geekbrains.appdictionary.model.ItemOfDictionary
 import ru.geekbrains.appdictionary.viewmodel.MainInteractor

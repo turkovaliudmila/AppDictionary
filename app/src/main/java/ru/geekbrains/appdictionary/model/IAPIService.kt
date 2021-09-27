@@ -1,10 +1,10 @@
 package ru.geekbrains.appdictionary.model
 
-import io.reactivex.Observable
+import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface IAPIService {
     @GET("/api/v2/entries/en/{word}")
-    fun search(@Path("word") wordToSearch: String): Observable<List<ItemOfDictionary>>
+    fun searchAsync(@Path("word") wordToSearch: String): Deferred<List<ItemOfDictionary>>
 }
