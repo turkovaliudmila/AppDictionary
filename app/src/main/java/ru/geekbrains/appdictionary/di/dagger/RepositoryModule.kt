@@ -1,7 +1,9 @@
-package ru.geekbrains.appdictionary.di
+package ru.geekbrains.appdictionary.di.dagger
 
 import dagger.Module
 import dagger.Provides
+import ru.geekbrains.appdictionary.di.NAME_LOCAL
+import ru.geekbrains.appdictionary.di.NAME_REMOTE
 import ru.geekbrains.appdictionary.model.*
 import javax.inject.Named
 import javax.inject.Singleton
