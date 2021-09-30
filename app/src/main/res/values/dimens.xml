@@ -3,4 +3,7 @@
     <dimen name="word_text_size">25sp</dimen>
     <dimen name="button_text_size">25sp</dimen>
     <dimen name="meanings_text_size">20dp</dimen>
+    <dimen name="margin_medium">15dp</dimen>
+    <dimen name="margin_small">10dp</dimen>
+    <dimen name="hairline">1px</dimen>
 </resources>

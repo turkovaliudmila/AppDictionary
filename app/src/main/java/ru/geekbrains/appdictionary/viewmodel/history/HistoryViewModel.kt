@@ -1,14 +1,13 @@
-package ru.geekbrains.appdictionary.viewmodel
+package ru.geekbrains.appdictionary.viewmodel.history
 
 import androidx.lifecycle.LiveData
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import ru.geekbrains.appdictionary.model.AppState
+import ru.geekbrains.appdictionary.utils.parseLocalSearchResults
+import ru.geekbrains.appdictionary.viewmodel.BaseViewModel
 
-class MainViewModel(private val interactor: MainInteractor) : BaseViewModel<AppState>() {
-
-    private var appState: AppState? = null
+class HistoryViewModel(private val interactor: HistoryInteractor) :
+    BaseViewModel<AppState>() {
 
     private val liveDataForViewToObserve: LiveData<AppState> = _mutableLiveData
 
@@ -19,11 +18,11 @@ class MainViewModel(private val interactor: MainInteractor) : BaseViewModel<AppS
     override fun getData(word: String, isOnline: Boolean) {
         _mutableLiveData.value = AppState.Loading(null)
         cancelJob()
-        viewModelCoroutineScope.launch { startInteractor(word) }
+        viewModelCoroutineScope.launch { startInteractor(word, isOnline) }
     }
 
-    private suspend fun startInteractor(word: String) = withContext(Dispatchers.IO) {
-        _mutableLiveData.postValue(interactor.getData(word, true))
+    private suspend fun startInteractor(word: String, isOnline: Boolean) {
+        _mutableLiveData.postValue(parseLocalSearchResults(interactor.getData(word, isOnline)))
     }
 
     override fun handleError(error: Throwable) {
@@ -31,7 +30,7 @@ class MainViewModel(private val interactor: MainInteractor) : BaseViewModel<AppS
     }
 
     override fun onCleared() {
-        _mutableLiveData.value = AppState.Success(null)
+        _mutableLiveData.value = AppState.Success(null) // Set View to
         super.onCleared()
     }
 
