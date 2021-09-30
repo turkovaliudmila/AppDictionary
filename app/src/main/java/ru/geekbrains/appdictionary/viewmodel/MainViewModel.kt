@@ -12,7 +12,7 @@ class MainViewModel(private val interactor: MainInteractor) : BaseViewModel<AppS
 
     private val liveDataForViewToObserve: LiveData<AppState> = _mutableLiveData
 
-    fun getAppState(): LiveData<AppState> {
+    fun getLiveDataAppState(): LiveData<AppState> {
         return liveDataForViewToObserve
     }
 

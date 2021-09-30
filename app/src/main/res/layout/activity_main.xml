@@ -26,13 +26,6 @@
             android:text="@string/button_get_text"
             android:textSize="@dimen/button_text_size" />
 
-        <TextView
-            android:id="@+id/meanings"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textSize="@dimen/meanings_text_size"
-            tools:text="@string/meanings_tools_text" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/main_activity_recyclerview"
             android:layout_width="match_parent"

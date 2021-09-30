@@ -30,11 +30,6 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
         initViews()
     }
 
-    override fun setData(data: List<ItemOfDictionary>) {
-        data.first().meanings?.let { adapter.setData(it) }
-
-    }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.history_menu, menu)
         return super.onCreateOptionsMenu(menu)
@@ -56,15 +51,18 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
         }
         val viewModel: MainViewModel by viewModel()
         model = viewModel
-        model.getAppState().observe(this@MainActivity, Observer<AppState> { renderData(it) })
+        model.getLiveDataAppState().observe(this@MainActivity, Observer<AppState> { renderData(it) })
     }
 
     private fun initViews() {
         binding.mainActivityRecyclerview.adapter = adapter
         binding.buttonGet.setOnClickListener {
             val searchWord = binding.word.text.toString()
-            Toast.makeText(this, searchWord, Toast.LENGTH_SHORT).show()
             model.getData(searchWord, true)
         }
+    }
+
+    override fun setData(data: List<ItemOfDictionary>) {
+        data.first().meanings?.let { adapter.setData(it) }
     }
 }

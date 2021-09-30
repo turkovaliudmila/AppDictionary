@@ -13,6 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_marginStart="@dimen/margin_medium"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/header_textview_recycler_item_text_size"
         tools:text="Header"/>
 
     <TextView
@@ -20,6 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_marginStart="@dimen/margin_medium"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/description_textview_recycler_item_text_size"
         tools:text="Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."/>
 
     <View xmlns:android="http://schemas.android.com/apk/res/android"
@@ -27,4 +29,5 @@
         android:layout_height="@dimen/hairline"
         android:layout_marginTop="@dimen/margin_small"
         android:background="@color/color_gray"/>
+
 </LinearLayout>

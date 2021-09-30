@@ -93,8 +93,6 @@ abstract class BaseActivity<T : AppState, I : IInteractor<T>> : AppCompatActivit
         return supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG) == null
     }
 
-    //abstract fun setDataToAdapter(data: List<ItemOfDictionary>)
-
     abstract fun setData(data: List<ItemOfDictionary>)
 
 }

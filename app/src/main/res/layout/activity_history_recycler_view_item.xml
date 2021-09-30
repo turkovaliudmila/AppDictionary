@@ -13,11 +13,21 @@
         android:layout_width="wrap_content"
         android:layout_marginStart="@dimen/margin_medium"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/header_history_textview_recycler_item_text_size"
         tools:text="Header"/>
+
+    <TextView
+        android:id="@+id/phonetic_textview_recycler_item"
+        android:layout_width="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/phonetic_textview_recycler_item_text_size"
+        tools:text="phonetic"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/hairline"
         android:layout_marginTop="@dimen/margin_small"
         android:background="@color/color_gray"/>
+
 </LinearLayout>

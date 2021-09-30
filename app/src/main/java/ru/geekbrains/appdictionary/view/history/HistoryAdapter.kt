@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.geekbrains.appdictionary.R
 import ru.geekbrains.appdictionary.model.ItemOfDictionary
 
-class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.RecyclerItemViewHolder>() {
+class HistoryAdapter() : RecyclerView.Adapter<HistoryAdapter.RecyclerItemViewHolder>() {
     private var data: List<ItemOfDictionary> = arrayListOf()
 
     fun setData(data: List<ItemOfDictionary>) {
@@ -37,9 +37,7 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.RecyclerItemViewHolde
         fun bind(data: ItemOfDictionary) {
             if (layoutPosition != RecyclerView.NO_POSITION) {
                 itemView.findViewById<TextView>(R.id.header_history_textview_recycler_item).text = data.word.toString()
-                itemView.setOnClickListener {
-                    Toast.makeText(itemView.context, "on click: ${data.word}", Toast.LENGTH_SHORT).show()
-                }
+                itemView.findViewById<TextView>(R.id.phonetic_textview_recycler_item).text = data.phonetic.toString()
             }
         }
     }

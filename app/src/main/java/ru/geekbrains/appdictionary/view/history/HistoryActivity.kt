@@ -10,7 +10,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.lifecycle.Observer
 import ru.geekbrains.appdictionary.databinding.ActivityHistoryBinding
 
-
 class HistoryActivity : BaseActivity<AppState, HistoryInteractor>() {
 
     private lateinit var binding: ActivityHistoryBinding
@@ -31,7 +30,6 @@ class HistoryActivity : BaseActivity<AppState, HistoryInteractor>() {
         model.getData("", false)
     }
 
-    // Вызовется из базовой Activity, когда данные будут готовы
     override fun setData(data: List<ItemOfDictionary>) {
         adapter.setData(data)
     }
