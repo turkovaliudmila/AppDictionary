@@ -12,18 +12,18 @@ class MainViewModel(private val interactor: MainInteractor) : BaseViewModel<AppS
 
     private val liveDataForViewToObserve: LiveData<AppState> = _mutableLiveData
 
-    fun getAppState(): LiveData<AppState> {
+    fun getLiveDataAppState(): LiveData<AppState> {
         return liveDataForViewToObserve
     }
 
-    override fun getData(word: String) {
+    override fun getData(word: String, isOnline: Boolean) {
         _mutableLiveData.value = AppState.Loading(null)
         cancelJob()
         viewModelCoroutineScope.launch { startInteractor(word) }
     }
 
     private suspend fun startInteractor(word: String) = withContext(Dispatchers.IO) {
-        _mutableLiveData.postValue(interactor.getData(word))
+        _mutableLiveData.postValue(interactor.getData(word, true))
     }
 
     override fun handleError(error: Throwable) {
