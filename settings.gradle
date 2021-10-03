@@ -1,2 +1,7 @@
+include ':history'
+include ':core'
+include ':repository'
+include ':utils'
+include ':model'
 include ':app'
 rootProject.name = "AppDictionary"

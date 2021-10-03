@@ -1,0 +1,64 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
+
+android {
+    compileSdkVersion Config.compile_sdk
+    buildToolsVersion Config.build_tools
+
+    defaultConfig {
+        minSdkVersion Config.min_sdk
+        targetSdkVersion Config.target_sdk
+        versionCode Releases.version_code
+        versionName Releases.version_name
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility Config.java_version
+        targetCompatibility Config.java_version
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+    implementation project(Modules.model)
+    implementation project(Modules.repository)
+    implementation project(Modules.core)
+    implementation project(Modules.utils)
+
+    implementation Kotlin.stdlib
+    implementation Kotlin.core
+    implementation Design.appcompat
+    implementation Design.material
+    implementation Design.constraintlayout
+
+    // Koin
+    implementation Koin.koin_core
+    implementation Koin.koin_android
+    implementation Koin.koin_android_compat
+
+    implementation Kotlin.coroutines_core
+    implementation Kotlin.coroutines_android
+
+    testImplementation TestImpl.junit
+    androidTestImplementation TestImpl.test_ext
+    androidTestImplementation TestImpl.espresso
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+}
