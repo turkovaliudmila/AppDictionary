@@ -4,20 +4,21 @@ import androidx.lifecycle.LiveData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import ru.geekbrains.appdictionary.model.AppState
+import ru.geekbrains.core.viewmodel.BaseViewModel
+import ru.geekbrains.model.AppState
 
 class MainViewModel(private val interactor: MainInteractor) : BaseViewModel<AppState>() {
 
-    private var appState: AppState? = null
+    private var appState: ru.geekbrains.model.AppState? = null
 
-    private val liveDataForViewToObserve: LiveData<AppState> = _mutableLiveData
+    private val liveDataForViewToObserve: LiveData<ru.geekbrains.model.AppState> = _mutableLiveData
 
-    fun getLiveDataAppState(): LiveData<AppState> {
+    fun getLiveDataAppState(): LiveData<ru.geekbrains.model.AppState> {
         return liveDataForViewToObserve
     }
 
     override fun getData(word: String, isOnline: Boolean) {
-        _mutableLiveData.value = AppState.Loading(null)
+        _mutableLiveData.value = ru.geekbrains.model.AppState.Loading(null)
         cancelJob()
         viewModelCoroutineScope.launch { startInteractor(word) }
     }
@@ -27,11 +28,11 @@ class MainViewModel(private val interactor: MainInteractor) : BaseViewModel<AppS
     }
 
     override fun handleError(error: Throwable) {
-        _mutableLiveData.postValue(AppState.Error(error))
+        _mutableLiveData.postValue(ru.geekbrains.model.AppState.Error(error))
     }
 
     override fun onCleared() {
-        _mutableLiveData.value = AppState.Success(null)
+        _mutableLiveData.value = ru.geekbrains.model.AppState.Success(null)
         super.onCleared()
     }
 

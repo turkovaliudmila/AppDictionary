@@ -6,14 +6,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.geekbrains.appdictionary.R
-import ru.geekbrains.appdictionary.model.Meanings
 
 class MainAdapter() :
     RecyclerView.Adapter<MainAdapter.RecyclerItemViewHolder>() {
 
-    private var data: List<Meanings> = arrayListOf()
+    private var data: List<ru.geekbrains.model.Meanings> = arrayListOf()
 
-    fun setData(data: List<Meanings>) {
+    fun setData(data: List<ru.geekbrains.model.Meanings>) {
         this.data = data
         notifyDataSetChanged()
     }
@@ -35,7 +34,7 @@ class MainAdapter() :
 
     inner class RecyclerItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        fun bind(data: Meanings) {
+        fun bind(data: ru.geekbrains.model.Meanings) {
             if (layoutPosition != RecyclerView.NO_POSITION) {
                 itemView.findViewById<TextView>(R.id.header_textview_recycler_item).text =
                     data.partOfSpeech.toString()

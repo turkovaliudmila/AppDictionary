@@ -1,20 +1,18 @@
-plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
-    id 'kotlin-parcelize'
-    id 'kotlin-kapt'
-}
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-parcelize'
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdkVersion Config.compile_sdk
+    buildToolsVersion Config.build_tools
 
     defaultConfig {
-        applicationId "ru.geekbrains.appdictionary"
-        minSdkVersion 23
-        targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        applicationId Config.application_id
+        minSdkVersion Config.min_sdk
+        targetSdkVersion Config.target_sdk
+        versionCode Releases.version_code
+        versionName Releases.version_name
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -27,8 +25,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility Config.java_version
+        targetCompatibility Config.java_version
     }
 
     kotlinOptions {
@@ -41,50 +39,40 @@ android {
 }
 
 dependencies {
+    implementation project(Modules.utils)
+    implementation project(Modules.model)
+    implementation project(Modules.repository)
+    implementation project(Modules.core)
+    implementation project(Modules.history)
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.6.0'
-    implementation 'androidx.appcompat:appcompat:1.3.1'
-    implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
-
-    // Rx-Java
-    implementation "io.reactivex.rxjava2:rxjava:2.2.20"
-    implementation "io.reactivex.rxjava2:rxkotlin:2.4.0"
-    implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
+    implementation Kotlin.stdlib
+    implementation Kotlin.core
+    implementation Design.appcompat
+    implementation Design.material
+    implementation Design.constraintlayout
 
     // Retrofit 2
-    def retrofit_version= "2.9.0"
-    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
-    implementation 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
-    implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
-
-    // Dagger
-    def dagger_version= "2.37"
-    implementation "com.google.dagger:dagger:$dagger_version"
-    implementation "com.google.dagger:dagger-android:$dagger_version"
-    implementation "com.google.dagger:dagger-android-support:$dagger_version"
-    kapt "com.google.dagger:dagger-compiler:$dagger_version"
-    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+    implementation Retrofit.retrofit
+    implementation Retrofit.converter_gson
+    implementation Retrofit.logging_interceptor
+    implementation Retrofit.adapter_coroutines
 
     // Koin
-    def koin_version= "3.1.2"
-    implementation "io.insert-koin:koin-core:$koin_version"
-    implementation "io.insert-koin:koin-android:$koin_version"
-    implementation "io.insert-koin:koin-android-compat:$koin_version"
+    implementation Koin.koin_core
+    implementation Koin.koin_android
+    implementation Koin.koin_android_compat
 
     // Room
-    def room_version= "2.3.0"
-    implementation "androidx.room:room-runtime:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
-    implementation "androidx.room:room-ktx:$room_version"
+    implementation Room.runtime
+    kapt Room.compiler
+    implementation Room.room_ktx
 
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0'
+    implementation Kotlin.coroutines_core
+    implementation Kotlin.coroutines_android
 
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    testImplementation TestImpl.junit
+    androidTestImplementation TestImpl.test_ext
+    androidTestImplementation TestImpl.espresso
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 }

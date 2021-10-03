@@ -1,28 +1,26 @@
 package ru.geekbrains.appdictionary.di.koin
 
 import androidx.room.Room
-import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.core.qualifier.named
 import org.koin.dsl.module
-import ru.geekbrains.appdictionary.di.NAME_REMOTE
-import ru.geekbrains.appdictionary.model.IRepository
-import ru.geekbrains.appdictionary.model.ItemOfDictionary
-import ru.geekbrains.appdictionary.model.RepositoryImplementation
-import ru.geekbrains.appdictionary.model.RetrofitImplementation
-import ru.geekbrains.appdictionary.model.database.HistoryDataBase
-import ru.geekbrains.appdictionary.model.database.repo.IRepositoryLocal
-import ru.geekbrains.appdictionary.model.database.repo.RepositoryImplementationLocal
-import ru.geekbrains.appdictionary.model.database.repo.RoomDataBaseImplementation
 import ru.geekbrains.appdictionary.viewmodel.MainInteractor
 import ru.geekbrains.appdictionary.viewmodel.MainViewModel
-import ru.geekbrains.appdictionary.viewmodel.history.HistoryInteractor
-import ru.geekbrains.appdictionary.viewmodel.history.HistoryViewModel
+import ru.geekbrains.history.viewmodel.HistoryInteractor
+import ru.geekbrains.history.viewmodel.HistoryViewModel
+import ru.geekbrains.model.ItemOfDictionary
 
 val application = module {
-    single { Room.databaseBuilder(get(), HistoryDataBase::class.java, "HistoryDB").build() }
-    single { get<HistoryDataBase>().historyDao() }
-    single<IRepository<List<ItemOfDictionary>>> { RepositoryImplementation(RetrofitImplementation()) }
-    single<IRepositoryLocal<List<ItemOfDictionary>>> { RepositoryImplementationLocal(RoomDataBaseImplementation(get())) }
+    single { Room.databaseBuilder(get(), ru.geekbrains.repository.database.HistoryDataBase::class.java, "HistoryDB").build() }
+    single { get<ru.geekbrains.repository.database.HistoryDataBase>().historyDao() }
+    single<ru.geekbrains.repository.IRepository<List<ItemOfDictionary>>> {
+        ru.geekbrains.repository.RepositoryImplementation(
+            ru.geekbrains.repository.RetrofitImplementation()
+        )
+    }
+    single<ru.geekbrains.repository.database.repo.IRepositoryLocal<List<ItemOfDictionary>>> {
+        ru.geekbrains.repository.database.repo.RepositoryImplementationLocal(
+            ru.geekbrains.repository.database.repo.RoomDataBaseImplementation(get())
+        )
+    }
 }
 
 val mainScreen = module {

@@ -1,23 +1,23 @@
 package ru.geekbrains.appdictionary.viewmodel
 
-import ru.geekbrains.appdictionary.di.NAME_REMOTE
-import ru.geekbrains.appdictionary.model.AppState
-import ru.geekbrains.appdictionary.model.IRepository
-import ru.geekbrains.appdictionary.model.ItemOfDictionary
-import ru.geekbrains.appdictionary.model.database.repo.IRepositoryLocal
-import javax.inject.Named
+import ru.geekbrains.core.viewmodel.IInteractor
+import ru.geekbrains.model.AppState
+import ru.geekbrains.model.ItemOfDictionary
 
 class MainInteractor(
-    private val repositoryRemote: IRepository<List<ItemOfDictionary>>,
-    private val repositoryLocal: IRepositoryLocal<List<ItemOfDictionary>>
+    private val repositoryRemote: ru.geekbrains.repository.IRepository<List<ItemOfDictionary>>,
+    private val repositoryLocal: ru.geekbrains.repository.database.repo.IRepositoryLocal<List<ItemOfDictionary>>
 ) : IInteractor<AppState> {
-    override suspend fun getData(word: String, fromRemoteSource: Boolean): AppState {
-        val appState: AppState
+    override suspend fun getData(
+        word: String,
+        fromRemoteSource: Boolean
+    ): ru.geekbrains.model.AppState {
+        val appState: ru.geekbrains.model.AppState
         if (fromRemoteSource) {
-            appState = AppState.Success(repositoryRemote.getData(word))
+            appState = ru.geekbrains.model.AppState.Success(repositoryRemote.getData(word))
             repositoryLocal.saveToDB(appState)
         } else {
-            appState = AppState.Success(repositoryLocal.getData(word))
+            appState = ru.geekbrains.model.AppState.Success(repositoryLocal.getData(word))
         }
         return appState
     }

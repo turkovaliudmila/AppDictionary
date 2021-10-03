@@ -4,16 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.geekbrains.appdictionary.R
 import ru.geekbrains.appdictionary.databinding.ActivityMainBinding
-import ru.geekbrains.appdictionary.model.AppState
-import ru.geekbrains.appdictionary.model.ItemOfDictionary
-import ru.geekbrains.appdictionary.view.history.HistoryActivity
 import ru.geekbrains.appdictionary.viewmodel.MainInteractor
 import ru.geekbrains.appdictionary.viewmodel.MainViewModel
+import ru.geekbrains.core.BaseActivity
+import ru.geekbrains.history.view.HistoryActivity
+import ru.geekbrains.model.AppState
 
 class MainActivity : BaseActivity<AppState, MainInteractor>() {
 
@@ -51,7 +50,8 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
         }
         val viewModel: MainViewModel by viewModel()
         model = viewModel
-        model.getLiveDataAppState().observe(this@MainActivity, Observer<AppState> { renderData(it) })
+        model.getLiveDataAppState()
+            .observe(this@MainActivity, Observer<ru.geekbrains.model.AppState> { renderData(it) })
     }
 
     private fun initViews() {
@@ -62,7 +62,10 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
         }
     }
 
-    override fun setData(data: List<ItemOfDictionary>) {
-        data.first().meanings?.let { adapter.setData(it) }
+    override fun setData(data: List<ru.geekbrains.model.ItemOfDictionary>) {
+        data.first()?.also { itemOfDictionary ->
+            itemOfDictionary.meanings?.let { adapter.setData(it) }
+            binding.phonetic.text = itemOfDictionary.phonetic.toString()
+        }
     }
 }
